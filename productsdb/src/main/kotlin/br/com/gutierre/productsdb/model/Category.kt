@@ -13,9 +13,6 @@ data class Category(
     @Column(name = "descricao", nullable = false, length = 200)
     var description: String = "",
 
-    @Column(name = "category_id", nullable = false)
-    var categoryId: Long = 0,
-
     @Column(nullable = false, length = 2)
     var filial: String = "",
 
