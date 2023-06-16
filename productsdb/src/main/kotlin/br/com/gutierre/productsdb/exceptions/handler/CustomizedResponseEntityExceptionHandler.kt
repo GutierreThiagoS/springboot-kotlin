@@ -20,19 +20,17 @@ class CustomizedResponseEntityExceptionHandler: ResponseEntityExceptionHandler()
     @ExceptionHandler(Exception::class)
     fun handlerAllException(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(
-            Date(),
-            ex.message,
-            request.getDescription(false)
-        )
+            message = ex.message,
+            details = request.getDescription(false),
+            )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
     @ExceptionHandler(UnsupportedMathOperationException::class)
     fun handlerBadRequestException(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(
-            Date(),
-            ex.message,
-            request.getDescription(false)
+            message = ex.message,
+            details = request.getDescription(false)
         )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST)
     }
@@ -40,9 +38,8 @@ class CustomizedResponseEntityExceptionHandler: ResponseEntityExceptionHandler()
     @ExceptionHandler(ResourceNotFoundException::class)
     fun handlerResourceNotFoundException(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(
-            Date(),
-            ex.message,
-            request.getDescription(false)
+            message = ex.message,
+            details = request.getDescription(false),
         )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND)
     }
@@ -50,9 +47,8 @@ class CustomizedResponseEntityExceptionHandler: ResponseEntityExceptionHandler()
     @ExceptionHandler(RequiredObjectIsNullException::class)
     fun handlerRequiredObjectIsNullException(ex: Exception, request: WebRequest): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(
-            Date(),
-            ex.message,
-            request.getDescription(false)
+            message = ex.message,
+            details = request.getDescription(false),
         )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND)
     }

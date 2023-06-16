@@ -6,7 +6,6 @@ import br.com.gutierre.productsdb.model.ItemOrder
 import br.com.gutierre.productsdb.repositories.ItemOrderRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.text.DateFormat
 import java.util.*
 import java.util.logging.Logger
 
@@ -18,9 +17,8 @@ class ItemOrderService {
 
     private val logger = Logger.getLogger(ItemOrderService::class.java.name)
 
-
     fun getAll(): List<ItemOrder> {
-        logger.info("Finding all products")
+        logger.info("Finding all produtos dos pedidos")
 
         return repository.findAll()
     }

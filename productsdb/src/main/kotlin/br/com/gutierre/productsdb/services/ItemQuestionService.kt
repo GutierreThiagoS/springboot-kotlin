@@ -1,7 +1,9 @@
 package br.com.gutierre.productsdb.services
 
 import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
+import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
 import br.com.gutierre.productsdb.model.ItemQuestion
+import br.com.gutierre.productsdb.model.Question
 import br.com.gutierre.productsdb.repositories.ItemQuestionRepository
 import br.com.gutierre.productsdb.repositories.QuestionRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,13 +17,19 @@ class ItemQuestionService {
     private lateinit var repository: ItemQuestionRepository
 
     @Autowired
-    private lateinit var repositoryQuestion: QuestionRepository
+    private lateinit var serviceQuestion: QuestionService
 
     private val logger = Logger.getLogger(ItemQuestionService::class.java.name)
 
 
     fun getAll(): List<ItemQuestion> {
         return repository.findAll()
+    }
+
+    fun findById(id: Long): ItemQuestion {
+        logger.info("Find Item Question with id $id")
+
+        return repository.findById(id).orElseThrow { ResourceNotFoundException("No Records found for this ID!") }
     }
 
     fun insert(itemQuestion: ItemQuestion?): ItemQuestion {
@@ -55,8 +63,9 @@ class ItemQuestionService {
             }
         }
 
-        if (repositoryQuestion.findById(itemQuestion.idQuestion) == null)
-            throw RequiredObjectIsNullException("Pergunta ainda não consta na base de dados!")
+        val id = itemQuestion.idQuestion
+
+        serviceQuestion.findById(id)
 
         return itemQuestion
     }
