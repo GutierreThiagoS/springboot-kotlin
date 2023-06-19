@@ -1,11 +1,9 @@
-package br.com.gutierre.productsdb.services
+package br.com.gutierre.productsdb.services.questions
 
 import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
 import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
 import br.com.gutierre.productsdb.model.ItemQuestion
-import br.com.gutierre.productsdb.model.Question
-import br.com.gutierre.productsdb.repositories.ItemQuestionRepository
-import br.com.gutierre.productsdb.repositories.QuestionRepository
+import br.com.gutierre.productsdb.repositories.question.ItemQuestionRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.logging.Logger

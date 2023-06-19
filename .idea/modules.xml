@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/productsdb/productsdb.iml" filepath="$PROJECT_DIR$/productsdb/productsdb.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/springboot-kotlin.iml" filepath="$PROJECT_DIR$/.idea/springboot-kotlin.iml" />
     </modules>
   </component>

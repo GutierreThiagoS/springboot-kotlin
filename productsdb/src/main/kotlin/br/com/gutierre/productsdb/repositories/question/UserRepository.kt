@@ -1,4 +1,4 @@
-package br.com.gutierre.productsdb.repositories
+package br.com.gutierre.productsdb.repositories.question
 
 import br.com.gutierre.productsdb.model.User
 import org.springframework.data.jpa.repository.JpaRepository
@@ -16,5 +16,10 @@ interface UserRepository: JpaRepository<User, Long?> {
     fun findUserLogin(
         @Param("email") email: String,
         @Param("senha") password: String,
+    ): User?
+
+    @Query(value = "SELECT * FROM usuario WHERE id = :userId LIMIT 1", nativeQuery = true)
+    fun findUserId(
+            @Param("userId") userId: Long,
     ): User?
 }

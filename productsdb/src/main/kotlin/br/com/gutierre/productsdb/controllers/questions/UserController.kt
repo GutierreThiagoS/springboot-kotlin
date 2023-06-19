@@ -1,9 +1,9 @@
-package br.com.gutierre.productsdb.controllers
+package br.com.gutierre.productsdb.controllers.questions
 
 import br.com.gutierre.productsdb.model.User
 import br.com.gutierre.productsdb.model.request.RequestLogin
 import br.com.gutierre.productsdb.model.response.ResponseLogin
-import br.com.gutierre.productsdb.services.UserService
+import br.com.gutierre.productsdb.services.questions.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

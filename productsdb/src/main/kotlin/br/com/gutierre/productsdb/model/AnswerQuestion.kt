@@ -9,7 +9,7 @@ import jakarta.persistence.Table
 import java.util.Date
 
 @Entity
-@Table(name = "Respostas")
+@Table(name = "respostas")
 data class AnswerQuestion(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,9 @@ data class AnswerQuestion(
 
     @Column(name = "descricao", nullable = false, length = 200)
     var description: String = "",
+
+    @Column(name = "usuario", nullable = false)
+    var userId: Long = 0,
 
     @Column(name = "data_resposta")
     var timeResponse: Date = Date()

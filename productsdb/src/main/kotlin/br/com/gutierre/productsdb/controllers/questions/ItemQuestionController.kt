@@ -1,7 +1,7 @@
-package br.com.gutierre.productsdb.controllers
+package br.com.gutierre.productsdb.controllers.questions
 
 import br.com.gutierre.productsdb.model.ItemQuestion
-import br.com.gutierre.productsdb.services.ItemQuestionService
+import br.com.gutierre.productsdb.services.questions.ItemQuestionService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,11 +24,6 @@ class ItemQuestionController {
     @PostMapping
     fun create(@RequestBody itemQuestion: ItemQuestion): ItemQuestion {
         return service.insert(itemQuestion)
-    }
-
-    @PostMapping("/all")
-    fun insertAll(@RequestBody items: List<ItemQuestion>): List<ItemQuestion> {
-        return service.insertAll(items)
     }
 
 }

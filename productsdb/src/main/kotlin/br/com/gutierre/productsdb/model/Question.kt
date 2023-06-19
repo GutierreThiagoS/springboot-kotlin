@@ -10,6 +10,9 @@ data class Question(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
 
+    @Column(name = "usuario_dest", nullable = false)
+    var userId: Long = 0,
+
     @Column(name = "titulo", nullable = false, length = 200)
     var title: String = "",
 

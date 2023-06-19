@@ -1,4 +1,4 @@
-package br.com.gutierre.productsdb.repositories
+package br.com.gutierre.productsdb.repositories.question
 
 import br.com.gutierre.productsdb.model.ItemQuestion
 import org.springframework.data.jpa.repository.JpaRepository
@@ -11,4 +11,10 @@ interface ItemQuestionRepository: JpaRepository<ItemQuestion, Long?> {
     fun getItemsInQuestion(
         @Param("questionId") questionId: Long
     ): List<ItemQuestion>
+
+    @Query(value = "SELECT * FROM item_pergunta WHERE id = :questionItemId AND question_id = :questionId LIMIT 1", nativeQuery = true)
+    fun findItemQuestion(
+            @Param("questionId") questionId: Long,
+            @Param("questionItemId") questionItemId: Long
+    ): ItemQuestion?
 }
