@@ -1,8 +1,6 @@
 package br.com.gutierre.productsdb.repositories.question
 
 import br.com.gutierre.productsdb.model.AnswerQuestion
-import br.com.gutierre.productsdb.model.ItemQuestion
-import br.com.gutierre.productsdb.model.Question
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

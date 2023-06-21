@@ -5,6 +5,8 @@ import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
 import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
 import br.com.gutierre.productsdb.model.User
 import br.com.gutierre.productsdb.model.request.RequestLogin
+import br.com.gutierre.productsdb.model.request.RequestRegister
+import br.com.gutierre.productsdb.model.response.ResponseInfo
 import br.com.gutierre.productsdb.model.response.ResponseLogin
 import br.com.gutierre.productsdb.repositories.question.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,15 +34,23 @@ class UserService {
         return repository.findById(id).orElseThrow { ResourceNotFoundException("No Records found for this ID!") }
     }
 
-    fun insert(user: User?): User {
-        logger.info("Create one question with name ${user?.email}")
+    fun insert(request: RequestRegister?): ResponseInfo {
+        logger.info("Create one question with name ${request?.email}")
 
-        val userNotNull = userIsNullOrValuesBlankException(user)
+        val requestNotNull = userIsNullOrValuesBlankException(request)
 
-        if (repository.findUserEmail(userNotNull.email) != null)
-            throw RequiredObjectIsNullException("já existe usuario com Email: ${userNotNull.email}!")
+        if (repository.findUserEmail(requestNotNull.email) != null)
+            throw RequiredObjectIsNullException("já existe usuário com Email: ${requestNotNull.email}!")
 
-        return repository.save(userNotNull)
+        val user = repository.save(
+                User(
+                        name = requestNotNull.name,
+                        email = requestNotNull.email,
+                        password = requestNotNull.password
+                )
+        )
+
+        return ResponseInfo(info = "${user.name} cadastrado com sucesso!")
     }
 
     fun login(request: RequestLogin?): ResponseLogin {
@@ -63,11 +73,11 @@ class UserService {
         )
     }
 
-    private fun userIsNullOrValuesBlankException(user: User?): User {
+    private fun userIsNullOrValuesBlankException(request: RequestRegister?): RequestRegister {
 
-        if (user == null) throw RequiredObjectIsNullException()
+        if (request == null) throw RequiredObjectIsNullException()
 
-        user.apply {
+        request.apply {
             when {
                 email.isBlank() -> throw RequiredObjectIsNullException("O Campo 'email' esta Vázia!")
                 password.isBlank() -> throw RequiredObjectIsNullException("O Campo 'senha' esta Vázia!")
@@ -75,6 +85,6 @@ class UserService {
             }
         }
 
-        return user
+        return request
     }
 }

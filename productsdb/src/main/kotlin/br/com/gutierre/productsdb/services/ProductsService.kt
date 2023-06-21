@@ -3,7 +3,10 @@ package br.com.gutierre.productsdb.services
 import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
 import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
 import br.com.gutierre.productsdb.model.Product
+import br.com.gutierre.productsdb.repositories.CategoryRepository
+import br.com.gutierre.productsdb.repositories.GroupRepository
 import br.com.gutierre.productsdb.repositories.ProductRepository
+import br.com.gutierre.productsdb.repositories.SubGroupRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
@@ -13,6 +16,15 @@ class ProductsService {
 
     @Autowired
     private lateinit var repository: ProductRepository
+
+    @Autowired
+    private lateinit var categoryRepository: CategoryRepository
+
+    @Autowired
+    private lateinit var groupRepository: GroupRepository
+
+    @Autowired
+    private lateinit var subGroupRepository: SubGroupRepository
 
     private val logger = Logger.getLogger(ProductsService::class.java.name)
 
@@ -34,6 +46,14 @@ class ProductsService {
         logger.info("Create one product with name ${product?.description}")
 
         val productNotNull = productIsNullOrValuesBlankException(product)
+
+        val category = categoryRepository.findCategoryId(productNotNull.category)
+        val group = groupRepository.findGroupIdInFilial(productNotNull.groupId, productNotNull.filial)
+        val subGroup = subGroupRepository.findSubGroupIdInFilial(productNotNull.subGroupId, productNotNull.filial)
+
+        when {
+            group == null && subGroup == null && category == null ->  throw RequiredObjectIsNullException("O 'Grupo, SubGrupo e Categoria' não constam na base de dados!")
+        }
 
         return repository.save(productNotNull)
     }

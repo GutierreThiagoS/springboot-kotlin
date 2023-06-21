@@ -2,6 +2,8 @@ package br.com.gutierre.productsdb.controllers.questions
 
 import br.com.gutierre.productsdb.model.User
 import br.com.gutierre.productsdb.model.request.RequestLogin
+import br.com.gutierre.productsdb.model.request.RequestRegister
+import br.com.gutierre.productsdb.model.response.ResponseInfo
 import br.com.gutierre.productsdb.model.response.ResponseLogin
 import br.com.gutierre.productsdb.services.questions.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +21,6 @@ class UserController {
     @Autowired
     private lateinit var service: UserService
 
-
     @GetMapping
     fun getAll(): List<User> {
         return service.getAll()
@@ -31,8 +32,8 @@ class UserController {
     }
 
     @PostMapping
-    fun create(@RequestBody user: User): User {
-        return service.insert(user)
+    fun create(@RequestBody request: RequestRegister): ResponseInfo {
+        return service.insert(request)
     }
 
     @PostMapping("/login")

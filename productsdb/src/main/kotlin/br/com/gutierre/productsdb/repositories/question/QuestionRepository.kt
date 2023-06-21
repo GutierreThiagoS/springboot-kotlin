@@ -15,10 +15,12 @@ interface QuestionRepository: JpaRepository<Question, Long?> {
             INNER JOIN respostas R ON PR.id = R.question_id 
             WHERE R.usuario = :userId 
             AND PR.id = P.id
-        ) = 0
+        ) = 0 
+        LIMIT :limit
     """, nativeQuery = true)
     fun getAllQuestionUser(
             @Param("userId") userId: Long,
+            @Param("limit") limit: Int,
     ): List<Question>
 
     @Query(value = "SELECT * FROM pergunta WHERE id = :questionId AND (usuario_dest = :userId OR usuario_dest = 0) LIMIT 1", nativeQuery = true)

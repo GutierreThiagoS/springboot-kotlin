@@ -12,4 +12,9 @@ interface CategoryRepository: JpaRepository<Category, Long?> {
         @Param("description") description: String,
         @Param("filial") filial: String
     ): Category?
+
+    @Query(value = "SELECT * FROM Category WHERE id = :categoryId LIMIT 1", nativeQuery = true)
+    fun findCategoryId(
+            @Param("categoryId") categoryId: Long
+    ): Category?
 }

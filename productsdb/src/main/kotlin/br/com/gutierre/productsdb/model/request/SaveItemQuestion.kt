@@ -1,7 +1,6 @@
 package br.com.gutierre.productsdb.model.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import jakarta.persistence.Column
 
 data class SaveItemQuestion(
         @field:JsonProperty("descricao")

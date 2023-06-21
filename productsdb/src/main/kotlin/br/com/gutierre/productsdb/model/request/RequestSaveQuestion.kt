@@ -1,6 +1,5 @@
 package br.com.gutierre.productsdb.model.request
 
-import br.com.gutierre.productsdb.model.ItemQuestion
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class RequestSaveQuestion(

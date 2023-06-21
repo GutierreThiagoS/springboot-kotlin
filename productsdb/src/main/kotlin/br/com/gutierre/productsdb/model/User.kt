@@ -8,7 +8,7 @@ import java.util.Date
 
 @Entity
 @Table(name = "usuario")
-@JsonPropertyOrder("user_id", " name", "email")
+@JsonPropertyOrder("user_id", " nome", "email")
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ data class User(
     var password: String = "",
 
     @field:JsonIgnore
-    @Column(name = "cargo", nullable = false, length = 200)
+    @Column(name = "cargo", nullable = false)
     var office: Int = 0,
 
     @field:JsonIgnore

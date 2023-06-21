@@ -5,6 +5,7 @@ import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
 import br.com.gutierre.productsdb.model.ItemQuestion
 import br.com.gutierre.productsdb.model.Question
 import br.com.gutierre.productsdb.model.User
+import br.com.gutierre.productsdb.model.request.RequestQuestions
 import br.com.gutierre.productsdb.model.request.RequestSaveQuestion
 import br.com.gutierre.productsdb.model.response.ResponseQuestions
 import br.com.gutierre.productsdb.model.response.ResponseSaveQuestion
@@ -85,13 +86,14 @@ class QuestionService {
         return repository.findById(id).orElseThrow { ResourceNotFoundException("No Records found for this ID Question!") }
     }
 
-    fun getAllQuestionsAndItems(userId: Long?): List<ResponseQuestions> {
+    fun getAllQuestionsAndItems(request: RequestQuestions?): List<ResponseQuestions> {
 
-        if (userId == null) throw RequiredObjectIsNullException()
+        if (request == null) throw RequiredObjectIsNullException()
+        if (request.limit == 0) throw RequiredObjectIsNullException("Limite deve ser maior que Zero!")
 
-        val user = repositoryUser.findById(userId).orElseThrow { ResourceNotFoundException("Usuário não encontrado!") }
+        val user = repositoryUser.findById(request.userId).orElseThrow { ResourceNotFoundException("Usuário não encontrado!") }
 
-        val questions: List<ResponseQuestions> = repository.getAllQuestionUser(user.id).map {
+        val questions: List<ResponseQuestions> = repository.getAllQuestionUser(user.id, request.limit).map {
             ResponseQuestions(
                 question = it,
                 items = repositoryItem.getItemsInQuestion(it.id)
@@ -128,7 +130,7 @@ class QuestionService {
             when {
                 description.isBlank() -> throw RequiredObjectIsNullException("O Campo 'descrição' esta Vázia!")
                 title.isBlank() -> throw RequiredObjectIsNullException("O Campo 'titulo' esta Vázia!")
-                items.isEmpty() -> throw RequiredObjectIsNullException("Não há opções para pergunta!")
+                items.isEmpty() -> throw RequiredObjectIsNullException("Não há 'opções' para pergunta!")
                 user.office == 0 -> throw RequiredObjectIsNullException("Usuário não tem permissão!")
                 items.any { it.description.isBlank() } -> throw RequiredObjectIsNullException("Existe opção vázia!")
             }

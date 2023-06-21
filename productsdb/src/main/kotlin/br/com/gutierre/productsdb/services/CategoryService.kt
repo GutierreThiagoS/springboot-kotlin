@@ -1,7 +1,9 @@
 package br.com.gutierre.productsdb.services
 
 import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
+import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
 import br.com.gutierre.productsdb.model.Category
+import br.com.gutierre.productsdb.model.Product
 import br.com.gutierre.productsdb.repositories.CategoryRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -18,6 +20,11 @@ class CategoryService {
         return repository.findAll()
     }
 
+    fun findById(id: Long): Category {
+        logger.info("Create one categoria with id $id")
+
+        return repository.findById(id).orElseThrow { ResourceNotFoundException("No Records found for this ID!") }
+    }
 
     fun insert(category: Category?): Category {
 
