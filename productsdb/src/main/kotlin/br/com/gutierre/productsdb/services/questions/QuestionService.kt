@@ -4,14 +4,15 @@ import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
 import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
 import br.com.gutierre.productsdb.model.ItemQuestion
 import br.com.gutierre.productsdb.model.Question
-import br.com.gutierre.productsdb.model.User
+import br.com.gutierre.productsdb.model.UserQuest
 import br.com.gutierre.productsdb.model.request.RequestQuestions
 import br.com.gutierre.productsdb.model.request.RequestSaveQuestion
 import br.com.gutierre.productsdb.model.response.ResponseQuestions
 import br.com.gutierre.productsdb.model.response.ResponseSaveQuestion
 import br.com.gutierre.productsdb.repositories.question.ItemQuestionRepository
 import br.com.gutierre.productsdb.repositories.question.QuestionRepository
-import br.com.gutierre.productsdb.repositories.question.UserRepository
+import br.com.gutierre.productsdb.repositories.question.UserQuestRepository
+import br.com.gutierre.productsdb.utils.stringOffice
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
@@ -26,7 +27,7 @@ class QuestionService {
     private lateinit var repositoryItem: ItemQuestionRepository
 
     @Autowired
-    private lateinit var repositoryUser: UserRepository
+    private lateinit var repositoryUser: UserQuestRepository
 
     private val logger = Logger.getLogger(QuestionService::class.java.name)
 
@@ -89,21 +90,25 @@ class QuestionService {
     fun getAllQuestionsAndItems(request: RequestQuestions?): List<ResponseQuestions> {
 
         if (request == null) throw RequiredObjectIsNullException()
-        if (request.limit == 0) throw RequiredObjectIsNullException("Limite deve ser maior que Zero!")
+        if (request.limit < 1) throw RequiredObjectIsNullException("Limite deve ser maior que Zero!")
 
-        val user = repositoryUser.findById(request.userId).orElseThrow { ResourceNotFoundException("Usuário não encontrado!") }
+        val user = if (request.userId != 0L) {
+            repositoryUser.findById(request.userId).orElseThrow { ResourceNotFoundException("Usuário não encontrado!") }
+        } else UserQuest()
 
         val questions: List<ResponseQuestions> = repository.getAllQuestionUser(user.id, request.limit).map {
             ResponseQuestions(
+                name = user.name,
+                permission = stringOffice(if (user.id == 0L) null else user.office),
                 question = it,
                 items = repositoryItem.getItemsInQuestion(it.id)
             )
         }
 
+        questions.ifEmpty { throw RequiredObjectIsNullException("Não há pergunta para ${user.name.ifBlank { "Convidado" }}!") }
+
         return questions
     }
-
-
 
     private fun questionIsNullOrValuesBlankException(question: Question?): Question {
 
@@ -123,7 +128,7 @@ class QuestionService {
 
         if (request == null) throw RequiredObjectIsNullException()
 
-        val user: User = repositoryUser.findById(request.adminId)
+        val user: UserQuest = repositoryUser.findById(request.adminId)
                 .orElseThrow { ResourceNotFoundException("Usuário requerente não encontrado!") }
 
         request.apply {

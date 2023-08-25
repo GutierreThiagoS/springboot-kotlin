@@ -1,34 +1,33 @@
 package br.com.gutierre.productsdb.services.questions
 
-import br.com.gutierre.productsdb.enums.Permission
 import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
 import br.com.gutierre.productsdb.exceptions.ResourceNotFoundException
-import br.com.gutierre.productsdb.model.User
+import br.com.gutierre.productsdb.model.UserQuest
 import br.com.gutierre.productsdb.model.request.RequestLogin
 import br.com.gutierre.productsdb.model.request.RequestRegister
 import br.com.gutierre.productsdb.model.response.ResponseInfo
 import br.com.gutierre.productsdb.model.response.ResponseLogin
-import br.com.gutierre.productsdb.repositories.question.UserRepository
+import br.com.gutierre.productsdb.repositories.question.UserQuestRepository
+import br.com.gutierre.productsdb.utils.stringOffice
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
 
 @Service
-class UserService {
+class UserQuestService {
 
     @Autowired
-    private lateinit var repository: UserRepository
+    private lateinit var repository: UserQuestRepository
 
-    private val logger = Logger.getLogger(UserService::class.java.name)
+    private val logger = Logger.getLogger(UserQuestService::class.java.name)
 
-
-    fun getAll(): List<User> {
+    fun getAll(): List<UserQuest> {
         logger.info("Finding all usuario")
 
         return repository.findAll()
     }
 
-    fun findById(id: Long): User {
+    fun findById(id: Long): UserQuest {
         logger.info("Find usuario with id $id")
 
         return repository.findById(id).orElseThrow { ResourceNotFoundException("No Records found for this ID!") }
@@ -43,10 +42,11 @@ class UserService {
             throw RequiredObjectIsNullException("já existe usuário com Email: ${requestNotNull.email}!")
 
         val user = repository.save(
-                User(
-                        name = requestNotNull.name,
-                        email = requestNotNull.email,
-                        password = requestNotNull.password
+                UserQuest(
+                    name = requestNotNull.name,
+                    email = requestNotNull.email,
+                    password = requestNotNull.password,
+//                    office = if (requestNotNull.admin) 1 else 0
                 )
         )
 
@@ -64,12 +64,7 @@ class UserService {
         return ResponseLogin(
             info = "Logado com Sucesso!",
             user = user,
-            permission =
-                when (user.office) {
-                    Permission.NORMAL.id -> Permission.NORMAL.value
-                    Permission.ADMIN.id -> Permission.ADMIN.value
-                    else -> ""
-                }
+            permission = stringOffice(user.office)
         )
     }
 

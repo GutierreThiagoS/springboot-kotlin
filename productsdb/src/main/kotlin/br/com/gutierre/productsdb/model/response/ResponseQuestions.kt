@@ -6,6 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ResponseQuestions(
 
+    @field:JsonProperty("nome_usuario")
+    var name: String,
+
+    @field:JsonProperty("permissao")
+    var permission: String,
+
     @field:JsonProperty("pergunta")
     var question: Question,
 

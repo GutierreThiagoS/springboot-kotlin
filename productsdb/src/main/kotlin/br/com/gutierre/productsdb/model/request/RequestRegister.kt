@@ -12,4 +12,7 @@ data class RequestRegister(
 
         @field:JsonProperty("senha")
         val password: String,
+//
+//        @field:JsonProperty("admin")
+//        val admin: Boolean = false,
 )

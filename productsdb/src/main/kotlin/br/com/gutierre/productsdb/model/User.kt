@@ -1,40 +1,81 @@
 package br.com.gutierre.productsdb.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import jakarta.persistence.*
-import java.util.Date
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 
 @Entity
-@Table(name = "usuario")
-@JsonPropertyOrder("user_id", " nome", "email")
-data class User(
+@Table(name = "Users")
+class User: UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @field:JsonProperty("user_id")
-    var id: Long = 0,
+    var id: Long = 0
 
-    @field:JsonProperty("nome")
-    @Column(name = "nome", nullable = false, length = 200)
-    var name: String = "",
+    @Column(name = "user_name", length = 255, unique = true)
+    var userName: String? = null
 
-    @Column(nullable = false, length = 200)
-    var email: String = "",
+    @Column(name = "full_name", length = 255)
+    var fullName: String? = null
 
-    @field:JsonIgnore
-    @Column(name = "senha", nullable = false, length = 200)
-    var password: String = "",
+    @Column(name = "password", length = 255)
+    private var password: String? = null
 
-    @field:JsonIgnore
-    @Column(name = "cargo", nullable = false)
-    var office: Int = 0,
+    @Column(name = "account_non_expired")
+    var accountNonExpired: Boolean? = null
 
-    @field:JsonIgnore
-    @Column(name = "data_criacao", nullable = false)
-    var timeCreate: Date = Date(),
+    @Column(name = "account_non_locked")
+    var accountNonLocked: Boolean? = null
 
-    @field:JsonIgnore
-    @Column(nullable = false)
-    var deleted: String = "N",
-)
+    @Column(name = "credentials_non_expired")
+    var credentialsNonExpired: Boolean? = null
+
+    @Column(name = "enabled")
+    var enabled: Boolean? = null
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "user_permission",
+        joinColumns = [JoinColumn(name = "id_user")],
+        inverseJoinColumns = [JoinColumn(name = "id_permission")],
+    )
+    var permissions: List<Permission>? = null
+
+    val roles: List<String?>
+        get() {
+            val roles: MutableList<String?> = ArrayList()
+            for (permission in permissions!!){
+                roles.add(permission.description)
+            }
+            return roles
+//            return permissions?.map { it.description } ?: listOf()
+        }
+
+    override fun getAuthorities(): Collection<GrantedAuthority> {
+        return permissions!!
+    }
+
+    override fun getPassword(): String {
+        return password!!
+    }
+
+    override fun getUsername(): String {
+        return userName!!
+    }
+
+    override fun isAccountNonExpired(): Boolean {
+        return accountNonExpired!!
+    }
+
+    override fun isAccountNonLocked(): Boolean {
+        return accountNonLocked!!
+    }
+
+    override fun isCredentialsNonExpired(): Boolean {
+        return credentialsNonExpired!!
+    }
+
+    override fun isEnabled(): Boolean {
+        return enabled!!
+    }
+}

@@ -8,7 +8,7 @@ import br.com.gutierre.productsdb.model.response.ResponseAnswerQuestion
 import br.com.gutierre.productsdb.repositories.question.AnswerQuestionRepository
 import br.com.gutierre.productsdb.repositories.question.ItemQuestionRepository
 import br.com.gutierre.productsdb.repositories.question.QuestionRepository
-import br.com.gutierre.productsdb.repositories.question.UserRepository
+import br.com.gutierre.productsdb.repositories.question.UserQuestRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
@@ -20,7 +20,7 @@ class AnswerQuestionService {
     private lateinit var repository: AnswerQuestionRepository
 
     @Autowired
-    private lateinit var repositoryUser: UserRepository
+    private lateinit var repositoryUser: UserQuestRepository
 
     @Autowired
     private lateinit var questionRepository: QuestionRepository

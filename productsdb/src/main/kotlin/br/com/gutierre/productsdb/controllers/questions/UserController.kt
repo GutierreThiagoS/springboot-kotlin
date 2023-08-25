@@ -1,11 +1,11 @@
 package br.com.gutierre.productsdb.controllers.questions
 
-import br.com.gutierre.productsdb.model.User
+import br.com.gutierre.productsdb.model.UserQuest
 import br.com.gutierre.productsdb.model.request.RequestLogin
 import br.com.gutierre.productsdb.model.request.RequestRegister
 import br.com.gutierre.productsdb.model.response.ResponseInfo
 import br.com.gutierre.productsdb.model.response.ResponseLogin
-import br.com.gutierre.productsdb.services.questions.UserService
+import br.com.gutierre.productsdb.services.questions.UserQuestService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,15 +19,15 @@ import org.springframework.web.bind.annotation.RestController
 class UserController {
 
     @Autowired
-    private lateinit var service: UserService
+    private lateinit var service: UserQuestService
 
     @GetMapping
-    fun getAll(): List<User> {
+    fun getAll(): List<UserQuest> {
         return service.getAll()
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable("id") id: Long): User {
+    fun findById(@PathVariable("id") id: Long): UserQuest {
         return service.findById(id)
     }
 
