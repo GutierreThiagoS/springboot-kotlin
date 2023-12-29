@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
 
 @EnableWebSecurity
 @Configuration
@@ -51,6 +52,8 @@ class SecurityConfig {
                 authorizeHttpRequests
                     .requestMatchers(
                         "/auth/signin",
+                        "/auth/signincode",
+                        "/auth/signuptoken",
                         "/auth/refresh/**",
                         "/v3/api-docs/**",
                         "/swagger-ui/**"
@@ -59,8 +62,16 @@ class SecurityConfig {
                     .requestMatchers("/api/**").authenticated()
                     .requestMatchers("/users").denyAll()
             }
-            .cors()
-            .and()
+            .cors { cors ->
+                cors.configurationSource {
+                    val config = CorsConfiguration()
+                    config.allowedOrigins = listOf("http://localhost:52000", "http://localhost:52000/#/login")
+                    config.allowedMethods = listOf("*")
+                    config.allowedHeaders = listOf("*")
+                    config.allowCredentials = true
+                    return@configurationSource config
+                }
+            }
             .apply(JwtConfigurer(tokenProvider))
             .and()
             .build()

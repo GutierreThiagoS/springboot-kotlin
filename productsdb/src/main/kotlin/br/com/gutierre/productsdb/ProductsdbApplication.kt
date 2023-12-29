@@ -1,10 +1,9 @@
 package br.com.gutierre.productsdb
 
+import br.com.gutierre.productsdb.utils.encryptPass
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder
+
 
 @SpringBootApplication
 class ProductsdbApplication
@@ -12,12 +11,6 @@ class ProductsdbApplication
 fun main(args: Array<String>) {
 	runApplication<ProductsdbApplication>(*args)
 
-	val encoders: MutableMap<String, PasswordEncoder> = HashMap()
-	val pbkdf2Encoder = Pbkdf2PasswordEncoder("", 8, 18500, Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256)
-
-	encoders["pbkdf2"] = pbkdf2Encoder
-	val passwordEncoder = DelegatingPasswordEncoder("pbkdf2", encoders)
-	passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder)
-	val result = passwordEncoder.encode("foo-bar")
-	println("My Hash $result")
+	encryptPass("12345678")
+//	362ad02420268beeb22d3a1f0d92749df461d7f4b74c9433d7415bdeef1b2902f4eb1edaecb37cb3
 }

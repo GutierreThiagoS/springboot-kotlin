@@ -1,7 +1,11 @@
 package br.com.gutierre.productsdb.controllers
 
 import br.com.gutierre.productsdb.data.vo.AccountCredentialVO
+import br.com.gutierre.productsdb.model.request.RequestSignUp
+import br.com.gutierre.productsdb.model.request.RequestToken
 import br.com.gutierre.productsdb.services.AuthService
+import br.com.gutierre.productsdb.utils.decryptData
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,12 +24,53 @@ class AuthController {
     @Autowired
     lateinit var authService: AuthService
 
+    @PostMapping(value = ["/signincode"],)
+    fun signInCode(@RequestBody request: RequestToken?): ResponseEntity<*> {
+        println("crypto $request")
+        val decode = decryptData(request!!.crypto)
+        val data = ObjectMapper().readValue(decode, AccountCredentialVO::class.java)
+
+        return if (data?.userName.isNullOrBlank() || data?.password.isNullOrBlank()) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request")
+        } else authService.signIn(data!!)
+    }
+
     @PostMapping(value = ["/signin"])
-    fun signin(@RequestBody data: AccountCredentialVO?): ResponseEntity<*> {
+    fun signIn(@RequestBody data: AccountCredentialVO?): ResponseEntity<*> {
         println("data $data")
         return if (data?.userName.isNullOrBlank() || data?.password.isNullOrBlank()) {
             ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request")
-        } else authService.signin(data!!)
+        } else authService.signIn(data!!)
+    }
+
+    @PostMapping(value = ["/signuptoken"])
+    fun signup(@RequestBody request: RequestToken?): ResponseEntity<*> {
+
+        println("crypto $request")
+        val decode = decryptData(request!!.crypto)
+        println("decode $decode")
+        val data = ObjectMapper().readValue(decode, RequestSignUp::class.java)
+        println("data $data")
+
+        return if (
+            data?.userName.isNullOrBlank()
+            || data?.password.isNullOrBlank()
+            || data?.fullName.isNullOrBlank()
+            ) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request")
+        } else authService.signup(data)
+    }
+
+    @PostMapping(value = ["/signup"])
+    fun signup(@RequestBody data: RequestSignUp?): ResponseEntity<*> {
+        println("data $data")
+        return if (
+            data?.userName.isNullOrBlank()
+            || data?.password.isNullOrBlank()
+            || data?.fullName.isNullOrBlank()
+            ) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request")
+        } else authService.signup(data!!)
     }
 
     @PostMapping(value = ["/refresh/{username}"])
