@@ -24,7 +24,7 @@ class AuthController {
     @Autowired
     lateinit var authService: AuthService
 
-    @PostMapping(value = ["/signincode"],)
+    @PostMapping(value = ["/signincode"])
     fun signInCode(@RequestBody request: RequestToken?): ResponseEntity<*> {
         println("crypto $request")
         val decode = decryptData(request!!.crypto)
@@ -82,4 +82,5 @@ class AuthController {
             ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request")
         } else authService.refreshToken(username, refreshToken)
     }
+
 }

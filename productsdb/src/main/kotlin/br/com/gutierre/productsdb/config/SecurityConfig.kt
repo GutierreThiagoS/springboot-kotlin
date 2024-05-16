@@ -52,6 +52,7 @@ class SecurityConfig {
                 authorizeHttpRequests
                     .requestMatchers(
                         "/auth/signin",
+                        "/auth/signup",
                         "/auth/signincode",
                         "/auth/signuptoken",
                         "/auth/refresh/**",

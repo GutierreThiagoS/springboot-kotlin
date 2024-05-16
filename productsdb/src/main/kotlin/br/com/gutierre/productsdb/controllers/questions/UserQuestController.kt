@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/user")
-class UserController {
+class UserQuestController {
 
     @Autowired
     private lateinit var service: UserQuestService
@@ -40,4 +40,5 @@ class UserController {
     fun login(@RequestBody requestLogin: RequestLogin): ResponseLogin {
         return service.login(requestLogin)
     }
+
 }

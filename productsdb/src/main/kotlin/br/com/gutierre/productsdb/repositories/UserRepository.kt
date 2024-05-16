@@ -24,4 +24,9 @@ interface UserRepository: JpaRepository<User?, Long?> {
         @Param("password") password: String,
     ): Int
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.enabled = false WHERE u.id = :id")
+    fun disableUser(@Param("id") id: Long)
+
 }
