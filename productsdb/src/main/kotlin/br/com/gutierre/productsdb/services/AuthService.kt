@@ -1,7 +1,7 @@
 package br.com.gutierre.productsdb.services
 
-import br.com.gutierre.productsdb.data.vo.AccountCredentialVO
-import br.com.gutierre.productsdb.data.vo.TokenVO
+import br.com.gutierre.productsdb.data.vo.v1.AccountCredentialVO
+import br.com.gutierre.productsdb.data.vo.v1.TokenVO
 import br.com.gutierre.productsdb.model.request.RequestSignUp
 import br.com.gutierre.productsdb.model.response.ResponseInfo
 import br.com.gutierre.productsdb.model.response.ResponseSingIn

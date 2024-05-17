@@ -1,7 +1,10 @@
 package br.com.gutierre.productsdb.integrationtestes.controller.cors.withjson
 
 
-import br.com.gutierre.integrationtestes.TestConfigs
+import br.com.gutierre.productsdb.data.vo.v1.AccountCredentialVO
+import br.com.gutierre.productsdb.data.vo.v1.PersonVO
+import br.com.gutierre.productsdb.data.vo.v1.TokenVO
+import br.com.gutierre.productsdb.integrationtestes.TestConfigs
 import br.com.gutierre.productsdb.integrationtestes.testecontainers.AbstractIntegrationTest
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder

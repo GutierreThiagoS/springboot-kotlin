@@ -1,6 +1,6 @@
 package br.com.gutierre.productsdb.controllers
 
-import br.com.gutierre.productsdb.data.vo.AccountCredentialVO
+import br.com.gutierre.productsdb.data.vo.v1.AccountCredentialVO
 import br.com.gutierre.productsdb.model.request.RequestSignUp
 import br.com.gutierre.productsdb.model.request.RequestToken
 import br.com.gutierre.productsdb.services.AuthService

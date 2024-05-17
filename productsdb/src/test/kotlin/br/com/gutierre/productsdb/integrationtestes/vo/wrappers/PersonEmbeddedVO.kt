@@ -1,6 +1,6 @@
-package br.com.erudio.integrationtests.vo.wrappers
+package br.com.gutierre.productsdb.integrationtestes.vo.wrappers
 
-import br.com.erudio.integrationtests.vo.PersonVO
+import br.com.gutierre.productsdb.data.vo.v1.PersonVO
 import com.fasterxml.jackson.annotation.JsonProperty
 
 class PersonEmbeddedVO {

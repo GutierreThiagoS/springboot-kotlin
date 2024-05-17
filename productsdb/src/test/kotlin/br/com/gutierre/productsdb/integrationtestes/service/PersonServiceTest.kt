@@ -1,9 +1,9 @@
 package br.com.gutierre.productsdb.integrationtestes.service
 
-import br.com.erudio.exceptions.RequiredObjectIsNullException
-import br.com.erudio.repository.PersonRepository
-import br.com.erudio.services.PersonService
-import br.com.erudio.unittests.mocks.MockPerson
+import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
+import br.com.gutierre.productsdb.repositories.PersonRepository
+import br.com.gutierre.productsdb.services.PersonService
+import br.com.gutierre.productsdb.unittests.mapper.moks.MockPerson
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -41,7 +41,7 @@ internal class PersonServiceTest {
         val result = service.findById(1)
 
         assertNotNull(result)
-        assertNotNull(result.key)
+        assertNotNull(result.id)
         assertNotNull(result.links)
         assertTrue(result.links.toString().contains("</api/person/v1/1>;rel=\"self\""))
         assertEquals("Address Test1", result.address)
@@ -63,7 +63,7 @@ internal class PersonServiceTest {
         val result = service.create(vo)
 
         assertNotNull(result)
-        assertNotNull(result.key)
+        assertNotNull(result.id)
         assertNotNull(result.links)
         assertTrue(result.links.toString().contains("</api/person/v1/1>;rel=\"self\""))
         assertEquals("Address Test1", result.address)
@@ -97,7 +97,7 @@ internal class PersonServiceTest {
         val result = service.update(vo)
 
         assertNotNull(result)
-        assertNotNull(result.key)
+        assertNotNull(result.id)
         assertNotNull(result.links)
         assertTrue(result.links.toString().contains("</api/person/v1/1>;rel=\"self\""))
         assertEquals("Address Test1", result.address)

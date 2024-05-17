@@ -12,6 +12,7 @@ class JwtConfigurer(
 {
     override fun configure(http: HttpSecurity) {
         val customFilter = JwtTokenFilter(tokenProvider)
+        println()
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter::class.java)
     }
 }

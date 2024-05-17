@@ -1,12 +1,9 @@
 package br.com.gutierre.mockito.services
 
-import br.com.gutierre.exceptions.RequiredObjectIsNullException
 import br.com.gutierre.productsdb.exceptions.RequiredObjectIsNullException
 import br.com.gutierre.productsdb.repositories.PersonRepository
 import br.com.gutierre.productsdb.services.PersonService
-import br.com.gutierre.repository.PersonRepository
-import br.com.gutierre.restwithspringbootandkotlin.mocks.MockPerson
-import br.com.gutierre.services.PersonService
+import br.com.gutierre.productsdb.unittests.mapper.moks.MockPerson
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -50,7 +47,7 @@ internal class PersonServiceTest {
         val result = service.findById(1)
 
         assertNotNull(result)
-        assertNotNull(result.key)
+        assertNotNull(result.id)
         assertNotNull(result.links)
         println(result.links)
         assertTrue(result.links.toString().contains("/api/person/v1/1"))
@@ -113,7 +110,7 @@ internal class PersonServiceTest {
         val result = service.create(vo)
 
         assertNotNull(result)
-        assertNotNull(result.key)
+        assertNotNull(result.id)
         assertNotNull(result.links)
         println(result.links)
         assertTrue(result.links.toString().contains("/api/person/v1/1"))
@@ -140,7 +137,7 @@ internal class PersonServiceTest {
         val result = service.create(vo)
 
         assertNotNull(result)
-        assertNotNull(result.key)
+        assertNotNull(result.id)
         assertNotNull(result.links)
         println(result.links)
         assertTrue(result.links.toString().contains("/api/person/v1/1"))

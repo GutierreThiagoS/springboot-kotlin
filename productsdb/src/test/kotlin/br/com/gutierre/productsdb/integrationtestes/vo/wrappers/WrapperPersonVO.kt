@@ -1,4 +1,4 @@
-package br.com.erudio.integrationtests.vo.wrappers
+package br.com.gutierre.productsdb.integrationtestes.vo.wrappers
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

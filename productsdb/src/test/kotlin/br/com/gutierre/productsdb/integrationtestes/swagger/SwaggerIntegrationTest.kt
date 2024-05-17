@@ -1,7 +1,7 @@
 package br.com.gutierre.productsdb.integrationtestes.swagger
 
-import br.com.gutierre.integrationtestes.testecontainers.AbstractIntegrationTest
 import br.com.gutierre.productsdb.integrationtestes.TestConfigs
+import br.com.gutierre.productsdb.integrationtestes.testecontainers.AbstractIntegrationTest
 import io.restassured.RestAssured
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

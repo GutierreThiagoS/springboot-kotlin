@@ -1,6 +1,6 @@
 package br.com.gutierre.productsdb.security.jwt
 
-import br.com.gutierre.productsdb.data.vo.TokenVO
+import br.com.gutierre.productsdb.data.vo.v1.TokenVO
 import br.com.gutierre.productsdb.exceptions.InvalidJwtAuthenticationException
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
@@ -24,8 +24,8 @@ class JwtTokenProvider {
     @Value("\${security.jwt.token.secret-key:secret}")
     private var secretKey = "secret"
 
-    @Value("\${security.jwt.token.expire-length:3600000}")
-    private var validityInMilliseconds: Long = 3_600_000 // 1h
+    @Value("\${security.jwt.token.expire-length:30600000}")
+    private var validityInMilliseconds: Long = 30_600_000 // 1h
 
     @Autowired
     private lateinit var userDetailsService: UserDetailsService
@@ -42,8 +42,6 @@ class JwtTokenProvider {
         val now = Date()
         val validity = Date(now.time + validityInMilliseconds)
 
-        println("now $now, validity $validity")
-
         val accessToken = getAccessToken(username, roles, now, validity)
         val refreshToken = getRefreshToken(username, roles, now)
         return TokenVO(
@@ -59,6 +57,12 @@ class JwtTokenProvider {
 
     private fun getAccessToken(username: String, roles: List<String?>, now: Date, validity: Date): String {
         val issuerURL: String = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString()
+
+        println("roles " + roles)
+        println("issuerURL " + issuerURL)
+        println("roles " + roles)
+        println("validity " + validity)
+
         return JWT.create()
             .withClaim("roles", roles)
             .withIssuedAt(now)
@@ -109,8 +113,9 @@ class JwtTokenProvider {
     }
 
     fun validateToken(token: String): Boolean {
-        val decodedJWT = decodedToken(token)
         try {
+            println("validateToken")
+            val decodedJWT = decodedToken(token)
             return !decodedJWT.expiresAt.before(Date())
         } catch (e: Exception) {
             throw InvalidJwtAuthenticationException("Expired or invalid JWT token!")

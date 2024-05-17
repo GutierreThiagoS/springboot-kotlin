@@ -11,7 +11,7 @@ data class PersonVO (
 
     @Mapping("id")
     @field:JsonProperty("id")
-    var key: Long = 0,
+    var id: Long = 0,
 
     @field:JsonProperty("first_name")
     var firstName: String = "",
@@ -22,5 +22,8 @@ data class PersonVO (
     var address: String = "",
 
     @field:JsonIgnore
-    var gender: String = ""
+    var gender: String = "",
+
+    @field:JsonIgnore
+    var enabled: Boolean = false
 ): RepresentationModel<PersonVO>()

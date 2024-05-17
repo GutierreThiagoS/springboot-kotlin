@@ -1,7 +1,11 @@
 package br.com.gutierre.productsdb.integrationtestes.controller.withjson
 
+import br.com.gutierre.productsdb.data.vo.v1.AccountCredentialVO
+import br.com.gutierre.productsdb.data.vo.v1.PersonVO
+import br.com.gutierre.productsdb.data.vo.v1.TokenVO
 import br.com.gutierre.productsdb.integrationtestes.TestConfigs
 import br.com.gutierre.productsdb.integrationtestes.testecontainers.AbstractIntegrationTest
+import br.com.gutierre.productsdb.integrationtestes.vo.wrappers.WrapperPersonVO
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.restassured.RestAssured
@@ -34,12 +38,12 @@ class PersonControllerJsonTest : AbstractIntegrationTest() {
     @Test
     @Order(0)
     fun testLogin() {
-        val user = AccountCredentialsVO(
-            username = "leandro",
+        val user = AccountCredentialVO(
+            userName = "leandro",
             password = "admin123"
         )
 
-        val token = RestAssured.given()
+        val token = given()
             .basePath("/auth/signin")
                 .port(TestConfigs.SERVER_PORT)
                 .contentType(TestConfigs.CONTENT_TYPE_JSON)

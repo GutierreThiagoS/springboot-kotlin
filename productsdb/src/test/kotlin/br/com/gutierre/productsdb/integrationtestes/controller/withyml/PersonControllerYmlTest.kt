@@ -1,12 +1,11 @@
 package br.com.gutierre.productsdb.integrationtestes.controller.withyml
 
-import br.com.erudio.integrationtests.controller.withyml.mapper.YMLMapper
-import br.com.erudio.integrationtests.vo.AccountCredentialsVO
-import br.com.erudio.integrationtests.vo.TokenVO
-import br.com.erudio.integrationtests.vo.wrappers.WrapperPersonVO
+import br.com.gutierre.productsdb.data.vo.v1.AccountCredentialVO
 import br.com.gutierre.productsdb.data.vo.v1.PersonVO
+import br.com.gutierre.productsdb.data.vo.v1.TokenVO
 import br.com.gutierre.productsdb.integrationtestes.TestConfigs
 import br.com.gutierre.productsdb.integrationtestes.testecontainers.AbstractIntegrationTest
+import br.com.gutierre.productsdb.integrationtestes.vo.wrappers.WrapperPersonVO
 import io.restassured.RestAssured
 import io.restassured.RestAssured.given
 import io.restassured.builder.RequestSpecBuilder
@@ -39,8 +38,8 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
     @Test
     @Order(0)
     fun testLogin() {
-        val user = AccountCredentialsVO(
-            username = "leandro",
+        val user = AccountCredentialVO(
+            userName = "leandro",
             password = "admin123"
         )
 
@@ -50,12 +49,12 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .basePath("/auth/signin")
                 .port(TestConfigs.SERVER_PORT)
-                .contentType(TestConfigs.CONTENT_TYPE_YML)
+                .contentType(TestConfigs.CONTENT_TYPE_YAML)
                 .body(user, objectMapper)
             .`when`()
             .post()
@@ -86,11 +85,11 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .spec(specification)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .body(person, objectMapper)
             .`when`()
             .post()
@@ -126,11 +125,11 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .spec(specification)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .body(person, objectMapper)
             .`when`()
             .put()
@@ -160,7 +159,7 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
     fun testDisablePersonById() {
         val item = given()
             .spec(specification)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .pathParam("id", person.id)
             .`when`()
             .patch("{id}")
@@ -194,11 +193,11 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .spec(specification)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .pathParam("id", person.id)
             .`when`()
             .get("{id}")
@@ -244,11 +243,11 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .spec(specification)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .queryParams(
                 "page", 3,
                 "size",12,
@@ -299,11 +298,11 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .spec(specification)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .pathParam("firstName", "Ayr")
             .queryParams(
                 "page", 0,
@@ -349,11 +348,11 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .spec(specificationWithoutToken)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .`when`()
             .get()
             .then()
@@ -374,11 +373,11 @@ class PersonControllerYmlTest : AbstractIntegrationTest() {
                     .config()
                     .encoderConfig(
                         EncoderConfig.encoderConfig()
-                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)
+                            .encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YAML, ContentType.TEXT)
                     )
             )
             .spec(specification)
-            .contentType(TestConfigs.CONTENT_TYPE_YML)
+            .contentType(TestConfigs.CONTENT_TYPE_YAML)
             .queryParams(
                 "page", 3,
                 "size",12,
