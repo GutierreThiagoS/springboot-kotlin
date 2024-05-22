@@ -8,7 +8,6 @@ import br.com.gutierre.productsdb.integrationtestes.testecontainers.AbstractInte
 import br.com.gutierre.productsdb.integrationtestes.vo.wrappers.WrapperPersonVO
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.restassured.RestAssured
 import io.restassured.RestAssured.given
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.filter.log.LogDetail
@@ -39,7 +38,7 @@ class PersonControllerXmlTest : AbstractIntegrationTest() {
     @Order(0)
     fun testLogin() {
         val user = AccountCredentialVO(
-            userName = "leandro",
+            userName = "gutierre",
             password = "admin123"
         )
 

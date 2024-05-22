@@ -5,7 +5,13 @@ import br.com.gutierre.productsdb.model.request.RequestSignUp
 import br.com.gutierre.productsdb.model.request.RequestToken
 import br.com.gutierre.productsdb.services.AuthService
 import br.com.gutierre.productsdb.utils.decryptData
+import br.com.gutierre.util.MediaType
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,12 +25,51 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Auth", description = "Endpoints de Autorização de Usuario")
 class AuthController {
 
     @Autowired
     lateinit var authService: AuthService
 
-    @PostMapping(value = ["/signincode"])
+    @Operation(
+        summary = "Login Code", description = "Login em codigo",
+        tags = ["Auth"],
+        responses = [
+            ApiResponse(
+                description = "Success",
+                responseCode = "200",
+                content = [
+                    Content(schema = Schema(implementation = ResponseEntity::class))
+                ]
+            ),
+            ApiResponse(
+                description = "No Content", responseCode = "204", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Bad Request", responseCode = "400", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Unauthorized", responseCode = "401", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Not Found", responseCode = "404", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Internal Error", responseCode = "500", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+        ]
+    )
+    @PostMapping(value = ["/signincode"], produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML])
     fun signInCode(@RequestBody request: RequestToken?): ResponseEntity<*> {
         println("crypto $request")
         val decode = decryptData(request!!.crypto)
@@ -35,7 +80,45 @@ class AuthController {
         } else authService.signIn(data!!)
     }
 
-    @PostMapping(value = ["/signin"])
+    @Operation(
+        summary = "Login", description = "Fazer Login e gerar Autorização",
+        tags = ["Auth"],
+        responses = [
+            ApiResponse(
+                description = "Success",
+                responseCode = "200",
+                content = [
+                    Content(schema = Schema(implementation = ResponseEntity::class))
+                ]
+            ),
+            ApiResponse(
+                description = "No Content", responseCode = "204", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Bad Request", responseCode = "400", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Unauthorized", responseCode = "401", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Not Found", responseCode = "404", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Internal Error", responseCode = "500", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+        ]
+    )
+    @PostMapping(value = ["/signin"], produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML])
     fun signIn(@RequestBody data: AccountCredentialVO?): ResponseEntity<*> {
         println("data $data")
         return if (data?.userName.isNullOrBlank() || data?.password.isNullOrBlank()) {
@@ -43,7 +126,45 @@ class AuthController {
         } else authService.signIn(data!!)
     }
 
-    @PostMapping(value = ["/signuptoken"])
+    @Operation(
+        summary = "Criar Login e token", description = "Criar Login e token",
+        tags = ["Auth"],
+        responses = [
+            ApiResponse(
+                description = "Success",
+                responseCode = "200",
+                content = [
+                    Content(schema = Schema(implementation = ResponseEntity::class))
+                ]
+            ),
+            ApiResponse(
+                description = "No Content", responseCode = "204", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Bad Request", responseCode = "400", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Unauthorized", responseCode = "401", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Not Found", responseCode = "404", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Internal Error", responseCode = "500", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+        ]
+    )
+    @PostMapping(value = ["/signuptoken"], produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML])
     fun signup(@RequestBody request: RequestToken?): ResponseEntity<*> {
 
         println("crypto $request")
@@ -60,8 +181,45 @@ class AuthController {
             ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request")
         } else authService.signup(data)
     }
-
-    @PostMapping(value = ["/signup"])
+    @Operation(
+        summary = "Criar Login", description = "Criar Login",
+        tags = ["Auth"],
+        responses = [
+            ApiResponse(
+                description = "Success",
+                responseCode = "200",
+                content = [
+                    Content(schema = Schema(implementation = ResponseEntity::class))
+                ]
+            ),
+            ApiResponse(
+                description = "No Content", responseCode = "204", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Bad Request", responseCode = "400", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Unauthorized", responseCode = "401", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Not Found", responseCode = "404", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Internal Error", responseCode = "500", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+        ]
+    )
+    @PostMapping(value = ["/signup"], produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML])
     fun signup(@RequestBody data: RequestSignUp?): ResponseEntity<*> {
         println("data $data")
         return if (
@@ -73,7 +231,45 @@ class AuthController {
         } else authService.signup(data!!)
     }
 
-    @PostMapping(value = ["/refresh/{username}"])
+    @Operation(
+        summary = "Refresh", description = "Atualizar Token",
+        tags = ["Auth"],
+        responses = [
+            ApiResponse(
+                description = "Success",
+                responseCode = "200",
+                content = [
+                    Content(schema = Schema(implementation = ResponseEntity::class))
+                ]
+            ),
+            ApiResponse(
+                description = "No Content", responseCode = "204", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Bad Request", responseCode = "400", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Unauthorized", responseCode = "401", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Not Found", responseCode = "404", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+            ApiResponse(
+                description = "Internal Error", responseCode = "500", content = [
+                    Content(schema = Schema(implementation = Unit::class))
+                ]
+            ),
+        ]
+    )
+    @PostMapping(value = ["/refresh/{username}"], produces = [MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML])
     fun refreshToken(
         @PathVariable("username") username: String?,
         @RequestHeader("Authorization") refreshToken: String?
