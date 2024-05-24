@@ -35,7 +35,7 @@ jobs:
         cache: maven
         
     - name: Build Aplication Jar
-      working-directory: ./springboot-kotlin/productsdb
+      working-directory: ./productsdb
       run: mvn clean package -DskipTests 
 
     - name: Docker Compose Build
