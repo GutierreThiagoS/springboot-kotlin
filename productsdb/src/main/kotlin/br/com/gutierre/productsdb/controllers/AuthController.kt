@@ -4,8 +4,8 @@ import br.com.gutierre.productsdb.data.vo.v1.AccountCredentialVO
 import br.com.gutierre.productsdb.model.request.RequestSignUp
 import br.com.gutierre.productsdb.model.request.RequestToken
 import br.com.gutierre.productsdb.services.AuthService
+import br.com.gutierre.productsdb.utils.MediaType
 import br.com.gutierre.productsdb.utils.decryptData
-import br.com.gutierre.util.MediaType
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content

@@ -2,7 +2,7 @@ package br.com.gutierre.productsdb.controllers
 
 import br.com.gutierre.productsdb.model.Product
 import br.com.gutierre.productsdb.services.ProductsService
-import br.com.gutierre.util.MediaType
+import br.com.gutierre.productsdb.utils.MediaType
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content

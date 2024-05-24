@@ -1,4 +1,4 @@
-package br.com.gutierre.productsdb.util
+package br.com.gutierre.productsdb.utils
 
 import org.springframework.data.domain.Sort
 

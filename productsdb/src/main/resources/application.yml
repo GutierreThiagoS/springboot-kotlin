@@ -1,16 +1,16 @@
 
-
 file:
   upload-dir: /Users/Gutierre/Documents/teste
 
-server:
-#  port: 8081
-  port: 80
 security:
   jwt:
     token:
       secret-key: 53cr37
       expire-length: 3600000
+
+server:
+  #  port: 8081
+  port: 80
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

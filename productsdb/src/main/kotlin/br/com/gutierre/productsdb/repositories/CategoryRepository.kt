@@ -7,13 +7,13 @@ import org.springframework.data.repository.query.Param
 
 interface CategoryRepository: JpaRepository<Category, Long?> {
 
-    @Query(value = "SELECT * FROM Category WHERE descricao = :description AND filial = :filial LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT C FROM Category C WHERE C.description = :description AND filial = :filial")
     fun findCategoryName(
         @Param("description") description: String,
         @Param("filial") filial: String
     ): Category?
 
-    @Query(value = "SELECT * FROM Category WHERE id = :categoryId LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT C FROM Category C WHERE C.id = :categoryId")
     fun findCategoryId(
             @Param("categoryId") categoryId: Long
     ): Category?

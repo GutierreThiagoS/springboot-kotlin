@@ -3,8 +3,8 @@ package br.com.gutierre.productsdb.controllers
 
 import br.com.gutierre.productsdb.data.vo.v1.PersonVO
 import br.com.gutierre.productsdb.services.PersonService
-import br.com.gutierre.productsdb.util.sortDirection
-import br.com.gutierre.util.MediaType
+import br.com.gutierre.productsdb.utils.MediaType
+import br.com.gutierre.productsdb.utils.sortDirection
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content

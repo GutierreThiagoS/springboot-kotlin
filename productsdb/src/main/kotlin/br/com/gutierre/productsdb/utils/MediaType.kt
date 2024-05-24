@@ -1,4 +1,4 @@
-package br.com.gutierre.util
+package br.com.gutierre.productsdb.utils
 
 object MediaType {
     const val APPLICATION_JSON = "application/json"
