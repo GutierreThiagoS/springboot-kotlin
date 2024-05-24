@@ -1,6 +1,7 @@
 
 file:
-  upload-dir: /Users/Gutierre/Documents/teste
+  upload-dir: /home/runner/work/springboot-kotlin/UploadDir
+#  upload-dir: /Users/Gutierre/Documents/teste
 
 security:
   jwt:
